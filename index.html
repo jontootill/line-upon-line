@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Line upon line</title>
+  <meta name="description" content="Learn quotes, then test yourself with word games.">
+  <link rel="stylesheet" href="style.css">
+  <script src="game.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <h1 class="site-title"><a href="./" id="home-link">Line upon line</a></h1>
+      <p class="site-tagline">Read it. Test it. Remember it.</p>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <!-- HOME: streak, calendar and topic choice -->
+    <div id="home">
+      <section class="panel" aria-labelledby="progress-heading">
+        <h2 id="progress-heading">Your progress</h2>
+
+        <div class="streak">
+          <p class="streak-count"><strong id="streak-now">0</strong> day streak</p>
+          <div>
+            <p id="streak-note" class="streak-note"></p>
+            <p id="streak-best" class="streak-best"></p>
+          </div>
+        </div>
+
+        <ul id="week" class="week" aria-label="This week"></ul>
+
+        <table class="period">
+          <caption>Quotes you got right</caption>
+          <thead>
+            <tr>
+              <td></td>
+              <th scope="col">Learned</th>
+              <th scope="col">Reviewed</th>
+            </tr>
+          </thead>
+          <tbody id="periods"></tbody>
+        </table>
+
+        <ul id="totals" class="totals"></ul>
+
+        <div class="due-row">
+          <p id="due-text" class="due-text"></p>
+          <button type="button" id="review" class="btn btn-primary" hidden>Review due</button>
+        </div>
+
+        <details class="how">
+          <summary>How this works</summary>
+          <p><strong>Streak:</strong> days in a row with at least one test passed.</p>
+          <p><strong>Learned:</strong> quotes you got right for the first time. <strong>Reviewed:</strong> quotes you got right again.</p>
+          <p><strong>Short-term</strong> quotes you have got right, but only recently. <strong>Long-term</strong> quotes you have recalled correctly after waiting several days.</p>
+          <p>When a quote is due, pass a hard test to move it up: hard gaps, hard jumble, first letters, or from memory. Forget it and it drops back a step.</p>
+        </details>
+      </section>
+
+      <section aria-labelledby="topics-heading">
+        <h2 id="topics-heading">Choose what to learn</h2>
+        <div id="topics" class="topics"></div>
+      </section>
+    </div>
+
+    <!-- PLAY: study, then test -->
+    <div id="play" hidden>
+      <a href="./" id="back-link" class="back-link">Back to all topics</a>
+
+      <section class="sheet" aria-label="Current quote">
+        <p id="progress" class="progress"></p>
+        <p id="prompt" class="prompt"></p>
+        <p id="test-name" class="test-name" hidden></p>
+        <p id="study-tip" class="study-tip">Read it through a few times. When you are ready, start the test.</p>
+
+        <div id="stage"></div>
+        <p id="result" class="result" role="status" aria-live="polite"></p>
+
+        <!-- Shown before the test only, so the difficulty cannot be changed to peek -->
+        <div id="setup" class="setup">
+          <div class="control-row">
+            <span class="control-label" id="level-label">Difficulty</span>
+            <div id="difficulty" class="segmented" role="group" aria-labelledby="level-label">
+              <button type="button" data-level="easy">Easy</button>
+              <button type="button" data-level="medium">Medium</button>
+              <button type="button" data-level="hard">Hard</button>
+            </div>
+          </div>
+
+          <label class="check-option">
+            <input type="checkbox" id="hints">
+            Show the first letter of each missing word in the gap tests
+          </label>
+        </div>
+
+        <div id="actions-study" class="actions">
+          <button type="button" id="start" class="btn btn-primary">Start test</button>
+          <button type="button" id="skip" class="btn">Skip quote</button>
+        </div>
+
+        <div id="actions-test" class="actions" hidden>
+          <button type="button" id="check" class="btn btn-primary">Check</button>
+          <button type="button" id="reveal" class="btn">Show answers</button>
+        </div>
+
+        <div id="actions-done" class="actions" hidden>
+          <button type="button" id="again" class="btn">Try this quote again</button>
+          <button type="button" id="next" class="btn btn-primary">Next quote</button>
+        </div>
+      </section>
+    </div>
+
+  </main>
+</body>
+</html>

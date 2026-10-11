@@ -1,0 +1,808 @@
+/* Line upon line
+   Design idea: an exercise book. The quote sits on ruled lines with a margin
+   line, and each test is written onto the page. */
+
+:root {
+  --paper: #eef2f8;
+  --sheet: #ffffff;
+  --ink: #1b2a41;
+  --ink-soft: #52627c;
+  --rule: #cddaea;
+  --margin: #e39a9a;
+  --accent: #26467a;
+  --on-accent: #ffffff;
+  --right: #1f7a5c;
+  --wrong: #b23a2e;
+  --header-bg: #1b2f55;
+  --header-ink: #ffffff;
+  --header-soft: #b9c8e4;
+
+  --serif: Charter, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --lh: 2.5rem; /* height of one ruled line */
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0e1723;
+    --sheet: #152133;
+    --ink: #e8eef7;
+    --ink-soft: #9fb0c8;
+    --rule: #2a3a52;
+    --margin: #8c4b52;
+    --accent: #8fb2ee;
+    --on-accent: #0e1723;
+    --right: #5fd0a3;
+    --wrong: #ff9486;
+    --header-bg: #08101a;
+    --header-ink: #e8eef7;
+    --header-soft: #9fb0c8;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Makes the hidden attribute win over any display rule below */
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.5;
+}
+
+.page {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+/* ---------- Header banner ---------- */
+
+.site-header {
+  background: var(--header-bg);
+  color: var(--header-ink);
+  border-bottom: 4px solid var(--margin);
+}
+
+.site-header-inner {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.4rem 1.25rem 1.2rem;
+}
+
+.site-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+
+.site-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-title a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+}
+
+.site-title a:focus-visible {
+  outline: 2px solid var(--header-ink);
+  outline-offset: 4px;
+}
+
+.site-tagline {
+  margin: 0.4rem 0 0;
+  color: var(--header-soft);
+}
+
+h2 {
+  margin: 0 0 0.75rem;
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+/* ---------- Pickers ---------- */
+
+.controls {
+  margin-bottom: 1.25rem;
+}
+
+.control-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1rem;
+}
+
+.control-label {
+  min-width: 6.5rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 1.1rem;
+}
+
+.tags button {
+  padding: 0.3rem 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--ink-soft);
+  font: inherit;
+  cursor: pointer;
+}
+
+.tags button[aria-pressed="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+
+.tags .count {
+  margin-left: 0.25rem;
+  font-size: 0.85em;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.segmented button {
+  padding: 0.4rem 1rem;
+  border: 0;
+  border-right: 1px solid var(--rule);
+  background: var(--sheet);
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.segmented button:last-child {
+  border-right: 0;
+}
+
+.segmented button[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.check-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.check-option input {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--accent);
+}
+
+/* ---------- The ruled sheet ---------- */
+
+.sheet {
+  position: relative;
+  padding: 1.25rem 1.25rem 1.5rem 3.25rem;
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* the margin line */
+.sheet::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 2.5rem;
+  width: 2px;
+  background: var(--margin);
+}
+
+.progress {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.prompt {
+  margin: 0.2rem 0 1rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+.study-tip {
+  margin: -0.4rem 0 1rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.quote {
+  /* ruled lines: one thin line at the bottom of every --lh band */
+  margin: 0 -1.25rem 0 -3.25rem;
+  padding: 0 1.25rem 0 3.25rem;
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  line-height: var(--lh);
+  background-image: linear-gradient(
+    to bottom,
+    transparent calc(var(--lh) - 1px),
+    var(--rule) calc(var(--lh) - 1px)
+  );
+  background-size: 100% var(--lh);
+}
+
+.quote.initials {
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+}
+
+.quote.feedback {
+  margin-top: 1rem;
+}
+
+.word {
+  white-space: nowrap; /* keeps a gap and its punctuation together */
+}
+
+.word.right {
+  color: var(--right);
+}
+
+.word.shown {
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* a word you missed in the typing tests */
+.blank {
+  display: inline-block;
+  height: 1.1em;
+  vertical-align: -0.1em;
+  border-bottom: 2px dashed var(--wrong);
+}
+
+/* ---------- Fill the gaps ---------- */
+
+.gap {
+  margin: 0;
+  padding: 0 0.15em;
+  border: 0;
+  border-bottom: 2px solid var(--ink-soft);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.gap::placeholder {
+  color: var(--ink-soft);
+  opacity: 0.7;
+}
+
+.gap:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-bottom-color: var(--accent);
+}
+
+/* right = solid green, wrong = dashed red, shown = dotted italic,
+   so the state never depends on colour alone */
+.gap.right {
+  color: var(--right);
+  border-bottom-color: var(--right);
+}
+
+.gap.wrong {
+  color: var(--wrong);
+  border-bottom: 2px dashed var(--wrong);
+}
+
+.gap.revealed {
+  color: var(--ink-soft);
+  font-style: italic;
+  border-bottom: 2px dotted var(--ink-soft);
+}
+
+/* ---------- Word jumble ---------- */
+
+.tray,
+.built {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 4px;
+}
+
+.tray {
+  min-height: 3.5rem;
+  border: 1px solid var(--rule);
+}
+
+.built {
+  min-height: 4rem;
+  margin-top: 0.75rem;
+  border: 2px dashed var(--rule);
+}
+
+.built:empty::before {
+  content: "Tap the pieces in order";
+  align-self: center;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.tile {
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--ink-soft);
+  border-radius: 4px;
+  background: var(--sheet);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  line-height: 1.3;
+  cursor: pointer;
+}
+
+.tile:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.tile.right {
+  border-color: var(--right);
+  color: var(--right);
+}
+
+.tile.wrong {
+  border: 1px dashed var(--wrong);
+  color: var(--wrong);
+}
+
+.tile.revealed {
+  border-style: dotted;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.tile.decoy,
+.tile.unused {
+  border-style: dashed;
+  color: var(--ink-soft);
+  opacity: 0.6;
+}
+
+.tile:disabled {
+  cursor: default;
+}
+
+/* ---------- Spot the wrong word ---------- */
+
+.pick {
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.pick:hover:not(:disabled) {
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+
+.pick.picked {
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+
+.pick.right {
+  color: var(--right);
+  box-shadow: inset 0 -2px 0 var(--right);
+}
+
+.pick.wrong {
+  color: var(--wrong);
+  text-decoration: line-through;
+  text-decoration-style: dashed;
+}
+
+.pick.revealed {
+  color: var(--right);
+  font-style: italic;
+  box-shadow: inset 0 -2px 0 var(--right);
+}
+
+.pick:disabled {
+  cursor: default;
+}
+
+/* ---------- Typing tests ---------- */
+
+.typing {
+  display: block;
+  width: 100%;
+  min-height: 8rem;
+  padding: 0.7rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.typing:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Setup, result and buttons ---------- */
+
+.setup {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+}
+
+.mode-note {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.result {
+  min-height: 1.5rem;
+  margin: 1rem 0 0;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.btn {
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--sheet);
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.btn:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.btn-primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+button:focus-visible,
+.check-option input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.stats {
+  margin: 1rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+/* ---------- Home page ---------- */
+
+.panel {
+  margin-bottom: 2rem;
+  padding: 1.25rem;
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
+
+.streak {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1.25rem;
+}
+
+.streak-count {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.streak-count strong {
+  font-family: var(--serif);
+  font-size: 2.6rem;
+  line-height: 1;
+  margin-right: 0.15rem;
+}
+
+.streak-note,
+.streak-best {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+/* the week, Monday to Sunday */
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.4rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.day {
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.4rem 0;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  text-align: center;
+}
+
+.day-name {
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+}
+
+.day-count {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.day.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.day.is-active .day-name {
+  color: inherit;
+}
+
+.day.is-today {
+  outline: 2px solid var(--ink-soft);
+  outline-offset: 2px;
+}
+
+.day.is-future {
+  opacity: 0.45;
+}
+
+/* today, this week, this month */
+.period {
+  width: 100%;
+  margin-top: 1.25rem;
+  border-collapse: collapse;
+}
+
+.period caption {
+  padding-bottom: 0.4rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+.period th,
+.period td {
+  padding: 0.5rem 0.5rem;
+  border-bottom: 1px solid var(--rule);
+  text-align: center;
+}
+
+.period thead th {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.period tbody th {
+  font-weight: 600;
+  text-align: left;
+}
+
+.period tbody td {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+}
+
+.totals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--ink-soft);
+}
+
+.totals strong {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.15rem;
+}
+
+.due-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+}
+
+.due-text {
+  margin: 0;
+  font-weight: 600;
+}
+
+.how {
+  margin-top: 1rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.how summary {
+  cursor: pointer;
+}
+
+.how p {
+  margin: 0.5rem 0 0;
+}
+
+.topics {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: 0.75rem;
+}
+
+.topic-card {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--sheet);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.topic-card:hover {
+  border-color: var(--accent);
+}
+
+.topic-name {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.topic-meta,
+.topic-counts {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 0.9rem;
+  color: var(--accent);
+}
+
+.test-name {
+  margin: 0 0 0.75rem;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.tray-note {
+  margin: 0 0 0.6rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+/* text for screen readers only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 30rem) {
+  :root {
+    --lh: 2.3rem;
+  }
+
+  .site-title {
+    font-size: 2.1rem;
+  }
+
+  .sheet {
+    padding-left: 2.5rem;
+  }
+
+  .sheet::before {
+    left: 1.8rem;
+  }
+
+  .quote {
+    margin-left: -2.5rem;
+    padding-left: 2.5rem;
+    font-size: 1.2rem;
+  }
+
+  .btn {
+    flex: 1 1 auto;
+  }
+}
