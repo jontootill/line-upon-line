@@ -57,13 +57,44 @@
           <p><strong>Streak:</strong> days in a row with at least one test passed.</p>
           <p><strong>Learned:</strong> quotes you got right for the first time. <strong>Reviewed:</strong> quotes you got right again.</p>
           <p><strong>Short-term</strong> quotes you have got right, but only recently. <strong>Long-term</strong> quotes you have recalled correctly after waiting several days.</p>
+          <p><strong>Each quote:</strong> you do different tests on it, and it only counts as passed if you get every test right first time.</p>
           <p>When a quote is due, pass a hard test to move it up: hard gaps, hard jumble, first letters, or from memory. Forget it and it drops back a step.</p>
+          <p><strong>Review learned</strong> lets you go back over anything you have learned. Getting it right early restarts the wait until it is next due.</p>
         </details>
       </section>
 
-      <section aria-labelledby="topics-heading">
+      <section class="chooser" aria-labelledby="topics-heading">
         <h2 id="topics-heading">Choose what to learn</h2>
-        <div id="topics" class="topics"></div>
+
+        <div id="type-tabs" class="type-tabs" role="tablist" aria-label="Type of content"></div>
+
+        <div id="type-panel" class="type-panel" role="tabpanel">
+          <p id="type-empty" class="type-empty" hidden></p>
+
+          <div id="chooser-body">
+            <label class="search">
+              <span class="sr-only">Search topics</span>
+              <input type="search" id="topic-search" placeholder="Search topics" autocomplete="off">
+            </label>
+
+            <div id="topic-chips" class="chips" role="group" aria-label="Topics"></div>
+            <p id="no-match" class="no-match" hidden>No topics match your search.</p>
+
+            <details id="other-topics" class="other" hidden>
+              <summary id="other-label">Other topics</summary>
+              <div id="other-chips" class="chips" role="group" aria-label="Other topics"></div>
+            </details>
+
+            <div class="start-row">
+              <p id="selection-summary" class="selection-summary"></p>
+              <div class="start-buttons">
+                <button type="button" id="clear-selection" class="btn" hidden>Clear</button>
+                <button type="button" id="review-learned" class="btn" hidden>Review learned</button>
+                <button type="button" id="learn" class="btn btn-primary">Start learning</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
 
@@ -71,11 +102,11 @@
     <div id="play" hidden>
       <a href="./" id="back-link" class="back-link">Back to all topics</a>
 
-      <section class="sheet" aria-label="Current quote">
+      <section id="quote-sheet" class="sheet" aria-label="Current quote">
         <p id="progress" class="progress"></p>
         <p id="prompt" class="prompt"></p>
         <p id="test-name" class="test-name" hidden></p>
-        <p id="study-tip" class="study-tip">Read it through a few times. When you are ready, start the test.</p>
+        <p id="study-tip" class="study-tip">Read it through a few times. Then you will do a few different tests on it.</p>
 
         <div id="stage"></div>
         <p id="result" class="result" role="status" aria-live="polite"></p>
@@ -107,9 +138,23 @@
           <button type="button" id="reveal" class="btn">Show answers</button>
         </div>
 
+        <div id="actions-between" class="actions" hidden>
+          <button type="button" id="next-test" class="btn btn-primary">Start test 2</button>
+        </div>
+
         <div id="actions-done" class="actions" hidden>
           <button type="button" id="again" class="btn">Try this quote again</button>
           <button type="button" id="next" class="btn btn-primary">Next quote</button>
+        </div>
+      </section>
+
+      <section id="round" class="sheet round" aria-labelledby="round-heading" hidden>
+        <h2 id="round-heading">Round complete</h2>
+        <p id="round-summary" class="round-summary"></p>
+        <ul id="round-list" class="round-list"></ul>
+        <div class="actions">
+          <button type="button" id="round-more" class="btn btn-primary">Learn 2 more</button>
+          <button type="button" id="round-home" class="btn">Back to home</button>
         </div>
       </section>
     </div>

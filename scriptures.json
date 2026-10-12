@@ -1,0 +1,247 @@
+[  {
+    "id": 113,
+    "type": "scripture",
+    "prompt": "John 1:10",
+    "answer": "He was in the world, and the world was made by him, and the world knew him not.",
+    "tags": ["Jesus Christ", "New Testament"]
+  },
+  {
+    "id": 114,
+    "type": "scripture",
+    "prompt": "Matthew 3:17",
+    "answer": "And lo a voice from heaven, saying, This is my beloved Son, in whom I am well pleased.",
+    "tags": ["Jesus Christ", "New Testament"]
+  },
+  {
+    "id": 115,
+    "type": "scripture",
+    "prompt": "Matthew 4:19",
+    "answer": "And he saith unto them, Follow me, and I will make you fishers of men.",
+    "tags": ["Jesus Christ", "New Testament"]
+  },
+  {
+    "id": 116,
+    "type": "scripture",
+    "prompt": "John 3:16",
+    "answer": "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.",
+    "tags": ["Jesus Christ", "New Testament"]
+  },
+  {
+    "id": 117,
+    "type": "scripture",
+    "prompt": "Matthew 5:16",
+    "answer": "Let your light so shine before men, that they may see your good works, and glorify your Father which is in heaven.",
+    "tags": ["example", "New Testament"]
+  },
+  {
+    "id": 118,
+    "type": "scripture",
+    "prompt": "Luke 7:21",
+    "answer": "And in that same hour he cured many of their infirmities and plagues, and of evil spirits; and unto many that were blind he gave sight.",
+    "tags": ["miracles", "New Testament"]
+  },
+  {
+    "id": 119,
+    "type": "scripture",
+    "prompt": "Matthew 11:30",
+    "answer": "For my yoke is easy, and my burden is light.",
+    "tags": ["peace", "New Testament"]
+  },
+  {
+    "id": 120,
+    "type": "scripture",
+    "prompt": "Matthew 13:16",
+    "answer": "But blessed are your eyes, for they see: and your ears, for they hear.",
+    "tags": ["obedience", "New Testament"]
+  },
+  {
+    "id": 121,
+    "type": "scripture",
+    "prompt": "John 6:38",
+    "answer": "For I came down from heaven, not to do mine own will, but the will of him that sent me.",
+    "tags": ["Jesus Christ", "New Testament"]
+  },
+  {
+    "id": 122,
+    "type": "scripture",
+    "prompt": "Matthew 18:3",
+    "answer": "And said, Verily I say unto you, Except ye be converted, and become as little children, ye shall not enter into the kingdom of heaven.",
+    "tags": ["conversion", "New Testament"]
+  },
+  {
+    "id": 123,
+    "type": "scripture",
+    "prompt": "John 10:27",
+    "answer": "My sheep hear my voice, and I know them, and they follow me:",
+    "tags": ["disciple of Christ", "New Testament"]
+  },
+  {
+    "id": 124,
+    "type": "scripture",
+    "prompt": "Luke 12:40",
+    "answer": "Be ye therefore ready also: for the Son of man cometh at an hour when ye think not.",
+    "tags": ["second coming", "New Testament"]
+  },
+  {
+    "id": 125,
+    "type": "scripture",
+    "prompt": "Luke 22:37",
+    "answer": "Jesus said unto him, Thou shalt love the Lord thy God with all thy heart, and with all thy soul, and with all thy mind.",
+    "tags": ["Love", "New Testament"]
+  },
+  {
+    "id": 126,
+    "type": "scripture",
+    "prompt": "John 14:15",
+    "answer": "If ye love me, keep my commandments.",
+    "tags": ["love", "obedience", "New Testament"]
+  },
+  {
+    "id": 127,
+    "type": "scripture",
+    "prompt": "John 14:18",
+    "answer": "I will not leave you comfortless: I will come to you.",
+    "tags": ["peace", "New Testament"]
+  },
+  {
+    "id": 128,
+    "type": "scripture",
+    "prompt": "Luke 23:34",
+    "answer": "Then said Jesus, Father, forgive them; for they know not what they do.",
+    "tags": ["repentance", "forgiveness", "New Testament"]
+  },
+  {
+    "id": 129,
+    "type": "scripture",
+    "prompt": "Acts 5:32",
+    "answer": "And we are his witnesses of these things; and so is also the Holy Ghost, whom God hath given to them that obey him.",
+    "tags": ["blessings", "New Testament"]
+  },
+  {
+    "id": 130,
+    "type": "scripture",
+    "prompt": "Acts 6:8",
+    "answer": "And Stephen, full of faith and power, did great wonders and miracles among the people.",
+    "tags": ["miracles", "New Testament"]
+  },
+  {
+    "id": 131,
+    "type": "scripture",
+    "prompt": "Acts 10:34",
+    "answer": "Then Peter opened his mouth, and said, Of a truth I perceive that God is no respecter of persons:",
+    "tags": ["God", "New Testament"]
+  },
+  {
+    "id": 132,
+    "type": "scripture",
+    "prompt": "Romans 6:23",
+    "answer": "For the wages of sin is death; but the gift of God is eternal life through Jesus Christ our Lord.",
+    "tags": ["eternal life", "New Testament"]
+  },
+  {
+    "id": 133,
+    "type": "scripture",
+    "prompt": "Romans 1:16",
+    "answer": "For I am not ashamed of the gospel of Christ: for it is the power of God unto salvation to every one that believeth;",
+    "tags": ["disciple of Christ", "New Testament"]
+  },
+  {
+    "id": 134,
+    "type": "scripture",
+    "prompt": "Galatians 5:22-23",
+    "answer": "But the fruit of the Spirit is love, joy, peace, longsuffering, gentleness, goodness, faith, Meekness, temperance: against such there is no law.",
+    "tags": ["Holy Ghost", "New Testament"]
+  },
+  {
+    "id": 135,
+    "type": "scripture",
+    "prompt": "Ephesians 6:13",
+    "answer": "Wherefore take unto you the whole armour of God, that ye may be able to withstand in the evil day, and having done all, to stand.",
+    "tags": ["second coming", "New Testament"]
+  },
+  {
+    "id": 136,
+    "type": "scripture",
+    "prompt": "Philippians 4:13",
+    "answer": "I can do all things through Christ which strengtheneth me.",
+    "tags": ["Jesus Christ", "New Testament"]
+  },
+  {
+    "id": 137,
+    "type": "scripture",
+    "prompt": "2 Thessalonians 3:13",
+    "answer": "But ye, brethren, be not weary in well doing.",
+    "tags": ["service", "New Testament"]
+  },
+
+    {
+    "id": 110,
+    "type": "scripture",
+    "prompt": "2 Nephi 25:26",
+    "answer": "We talk of Christ, we rejoice in Christ, we preach of Christ, we prophesy of Christ",
+    "tags": ["Jesus Christ", "Book of Mormon"]
+  },
+  {
+    "id": 111,
+    "type": "scripture",
+    "prompt": "Mosiah 2:17",
+    "answer": "When ye are in the service of your fellow beings ye are only in the service of your God.",
+    "tags": ["service", "Book of Mormon"]
+  },
+  {
+    "id": 112,
+    "type": "scripture",
+    "prompt": "Luke 2:52",
+    "answer": "And Jesus increased in wisdom and stature, and in favour with God and man.",
+    "tags": ["Jesus Christ", "New Testament"]
+  },
+    {
+    "id": 108,
+    "type": "scripture",
+    "prompt": "2 Nephi 2:25",
+    "answer": "Adam fell that men might be, and men are that they might have joy.",
+    "tags": ["joy", "Book of Mormon"]
+  },
+  {
+    "id": 106,
+    "type": "scripture",
+    "prompt": "1 Nephi 3:7",
+    "answer": "I will go and do the things which the Lord hath commanded, for I know that the Lord giveth no commandments unto the children of men, save he shall prepare a way for them that they may accomplish the thing which he commandeth them.",
+    "tags": ["obedience", "Book of Mormon"]
+  },
+    {
+    "id": 100,
+    "type": "scripture",
+    "prompt": "D&C 59:23",
+    "answer": "But learn that he who doeth the works of righteousness shall receive his reward, even peace in this world, and eternal life in the world to come",
+    "tags": ["peace", "Doctrine and Covenants"]
+  },
+  {
+    "id": 101,
+    "type": "scripture",
+    "prompt": "D&C 84:88",
+    "answer": "I will go before your face. I will be on your right hand and on your left, and my Spirit shall be in your hearts, and mine angels round about you, to bear you up",
+    "tags": ["Holy Ghost", "Doctrine and Covenants"]
+  },
+  {
+    "id": 102,
+    "type": "scripture",
+    "prompt": "D&C 87:8",
+    "answer": "Wherefore, stand ye in holy places, and be not moved, until the day of the Lord come",
+    "tags": ["temples", "Doctrine and Covenants"]
+  },
+  {
+    "id": 103,
+    "type": "scripture",
+    "prompt": "D&C 88:118",
+    "answer": "seek ye out of the best books words of wisdom; seek learning, even by study and also by faith.",
+    "tags": ["learning", "Doctrine and Covenants"]
+  },
+  {
+    "id": 104,
+    "type": "scripture",
+    "prompt": "D&C 93:24",
+    "answer": "Truth is knowledge of things as they are, and as they were, and as they are to come;",
+    "tags": ["truth", "Doctrine and Covenants"]
+  }
+]

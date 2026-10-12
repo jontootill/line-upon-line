@@ -28,9 +28,37 @@ function pieceCount(wordTotal, level) {
   return wordTotal;
 }
 
-// This game works on text you memorise word for word.
-// Facts (type "fact") will need a different game, so they are skipped here.
-const TEXT_TYPES = ["quote", "scripture"];
+// The kinds of content, each with its own tab and its own JSON file.
+// Items are given their kind by the file they come from, or by their own "type".
+// Facts will need a different game, so they are not here yet.
+const TYPES = {
+  quote: {
+    label: "Quotes",
+    one: "quote",
+    many: "quotes",
+    file: "data.json",
+    empty: "No quotes yet.",
+  },
+  scripture: {
+    label: "Scriptures",
+    one: "scripture",
+    many: "scriptures",
+    file: "scriptures.json",
+    empty:
+      "No scriptures yet. Add a scriptures.json file next to data.json, using the same format as your quotes.",
+  },
+};
+
+// Topics with fewer items than this are tucked under "Other topics"
+const MIN_TOPIC_SIZE = 3;
+
+// ---- Settings you might want to change ----
+// How many quotes you work through in one go (one "round").
+const SESSION_SIZE = 2;
+
+// How many different tests you must do on each quote before moving on.
+// (Up to 5, because there are five kinds of test.)
+const TESTS_PER_QUOTE = 3;
 
 // Opposites used by "Spot the wrong word" so some swaps look believable.
 const SWAPS = {
@@ -58,15 +86,24 @@ const DAY = 24 * 60 * 60 * 1000;
 // ---------- State ----------
 
 const state = {
-  quotes: [],
+  quotes: [],         // every quote and scripture, all types together
   wordPool: [],       // every word in the data, used for believable swaps
-  progress: {},       // quote id -> { box, due, attempts, perfects, last }
-  history: {},        // "2026-10-11" -> { new: [ids], reviewed: [ids] }
+  tagLabels: new Map(), // "doctrine of christ" -> "Doctrine of christ"
+  fileStatus: {},     // type -> "ok" | "missing" | "broken"
+  progress: {},       // item key -> { box, due, attempts, perfects, last }
+  history: {},        // "2026-10-11" -> { new: [keys], reviewed: [keys] }
   view: "home",       // "home" or "play"
+
+  // the topic chooser
+  tab: "quote",
+  selection: { quote: [], scripture: [] }, // chosen topics for each tab
+  search: "",
+  othersOpen: false,
+
+  // what is being played
+  session: { type: "quote", tags: [], kind: "learn" }, // kind: "learn", "due" or "learned"
   deck: [],
   position: 0,
-  tag: "all",
-  dueOnly: false,
   activeMode: null,   // the test on screen
   lastMode: null,     // so the same test never comes up twice running
   level: "medium",
@@ -75,6 +112,15 @@ const state = {
   current: null,
   ctrl: null,         // controller of the test on screen
   counted: false,     // result for this quote already recorded?
+
+  // the tests on the current quote
+  testNumber: 0,      // 1 for the first test, 2 for the second...
+  results: [],        // one { mode, perfect, strong } for each finished test
+  testResult: null,   // did the test on screen go right on the first check?
+
+  // the current round
+  roundCount: 0,      // quotes finished so far
+  roundLog: [],       // [{ label, perfect }] for the round summary
 };
 
 // ---------- Page elements ----------
@@ -94,7 +140,20 @@ const el = {
   totals: $("totals"),
   dueText: $("due-text"),
   review: $("review"),
-  topics: $("topics"),
+  reviewLearned: $("review-learned"),
+  typeTabs: $("type-tabs"),
+  typePanel: $("type-panel"),
+  typeEmpty: $("type-empty"),
+  chooserBody: $("chooser-body"),
+  search: $("topic-search"),
+  chips: $("topic-chips"),
+  other: $("other-topics"),
+  otherLabel: $("other-label"),
+  otherChips: $("other-chips"),
+  noMatch: $("no-match"),
+  selectionSummary: $("selection-summary"),
+  clear: $("clear-selection"),
+  learn: $("learn"),
   progress: $("progress"),
   prompt: $("prompt"),
   testName: $("test-name"),
@@ -113,6 +172,14 @@ const el = {
   reveal: $("reveal"),
   again: $("again"),
   next: $("next"),
+  actionsBetween: $("actions-between"),
+  nextTest: $("next-test"),
+  sheet: $("quote-sheet"),
+  round: $("round"),
+  roundSummary: $("round-summary"),
+  roundList: $("round-list"),
+  roundMore: $("round-more"),
+  roundHome: $("round-home"),
 };
 
 // ---------- Small helpers ----------
@@ -208,6 +275,7 @@ function loadPrefs() {
     const saved = JSON.parse(localStorage.getItem(PREFS_KEY) || "{}");
     if (LEVELS.includes(saved.level)) state.level = saved.level;
     state.hints = Boolean(saved.hints);
+    if (TYPES[saved.tab]) state.tab = saved.tab;
   } catch (err) {
     // Storage can be blocked. The game still works without it.
   }
@@ -217,7 +285,7 @@ function savePrefs() {
   try {
     localStorage.setItem(
       PREFS_KEY,
-      JSON.stringify({ level: state.level, hints: state.hints })
+      JSON.stringify({ level: state.level, hints: state.hints, tab: state.tab })
     );
   } catch (err) {
     // ignore
@@ -331,7 +399,9 @@ function makeDecoys(text, pieces, wanted) {
   const ownWords = new Set(text.split(/\s+/).map(normalise));
   const taken = new Set(pieces.map((p) => p.toLowerCase()));
   const sizes = pieces.map((p) => p.split(" ").length);
-  const others = state.quotes.filter((q) => q.answer !== text);
+  const notThis = state.quotes.filter((q) => q.answer !== text);
+  const sameType = notThis.filter((q) => state.current && q.type === state.current.type);
+  const others = sameType.length ? sameType : notThis;
   const decoys = [];
 
   for (let tries = 0; tries < 80 && decoys.length < wanted && others.length; tries++) {
@@ -742,8 +812,15 @@ function saveHistory() {
   }
 }
 
+// The key progress is saved under. Quotes keep their plain id, so progress
+// saved before scriptures existed still works. Other types get a prefix, so a
+// scripture with id 1 never clashes with a quote with id 1.
+function keyOf(quote) {
+  return quote.type === "quote" ? String(quote.id) : `${quote.type}-${quote.id}`;
+}
+
 function boxOf(quote) {
-  const record = state.progress[quote.id];
+  const record = state.progress[keyOf(quote)];
   return record ? record.box : 0;
 }
 
@@ -755,7 +832,7 @@ function category(quote) {
 }
 
 function isDue(quote) {
-  const record = state.progress[quote.id];
+  const record = state.progress[keyOf(quote)];
   return Boolean(record) && record.box > 0 && record.due <= Date.now();
 }
 
@@ -767,34 +844,45 @@ function isStrongTest() {
   return false; // spotting a swapped word is recognition, not recall
 }
 
-function recordResult(quote, perfect) {
+// results = one { perfect, strong } for each test done on this quote.
+// It only counts as a pass if EVERY test was right on the first check.
+function recordResult(quote, results) {
   const now = Date.now();
-  const record = state.progress[quote.id] || { box: 0, due: 0, attempts: 0, perfects: 0, last: 0 };
+  const key = keyOf(quote);
+  const record = state.progress[key] || { box: 0, due: 0, attempts: 0, perfects: 0, last: 0 };
   const wasNew = record.box === 0;
+  const perfect = results.every((r) => r.perfect);
+  const strong = results.some((r) => r.strong);
 
   record.attempts += 1;
   record.last = now;
 
   if (perfect) {
     record.perfects += 1;
-    logPass(quote.id, wasNew);
+    logPass(key, wasNew);
+
     if (record.box === 0) {
-      // First perfect test: it becomes short-term
+      // First pass: it becomes short-term
       record.box = 1;
       record.due = now + INTERVAL_DAYS[1] * DAY;
-    } else if (isStrongTest() && now >= record.due) {
-      // Strong recall after waiting: move up a box
-      record.box = Math.min(MAX_BOX, record.box + 1);
-      record.due = now + INTERVAL_DAYS[record.box] * DAY;
+    } else if (now >= record.due) {
+      // It was due. A strong test moves it up a box.
+      // Without one it stays due, so it comes back for a harder test.
+      if (strong) {
+        record.box = Math.min(MAX_BOX, record.box + 1);
+        record.due = now + INTERVAL_DAYS[record.box] * DAY;
+      }
+    } else {
+      // An early review: the waiting time starts again from today
+      record.due = Math.max(record.due, now + INTERVAL_DAYS[record.box] * DAY);
     }
-    // Otherwise it was extra practice, so the schedule stays as it is
   } else if (record.box > 0) {
     // Forgot it: drop a box and bring it back tomorrow
     record.box = Math.max(1, record.box - 1);
     record.due = now + DAY;
   }
 
-  state.progress[quote.id] = record;
+  state.progress[key] = record;
   saveProgress();
 }
 
@@ -825,14 +913,16 @@ function keyToUTC(key) {
 }
 
 // Remember that a quote was passed today. "new" = learned for the first time.
-function logPass(id, wasNew) {
+function logPass(quoteKey, wasNew) {
   const key = dayKey(new Date());
   const day = state.history[key] || { new: [], reviewed: [] };
+  day.new = day.new.map(String);
+  day.reviewed = day.reviewed.map(String);
 
   if (wasNew) {
-    if (!day.new.includes(id)) day.new.push(id);
-  } else if (!day.new.includes(id) && !day.reviewed.includes(id)) {
-    day.reviewed.push(id);
+    if (!day.new.includes(quoteKey)) day.new.push(quoteKey);
+  } else if (!day.new.includes(quoteKey) && !day.reviewed.includes(quoteKey)) {
+    day.reviewed.push(quoteKey);
   }
 
   state.history[key] = day;
@@ -842,7 +932,7 @@ function logPass(id, wasNew) {
 function passedOn(key) {
   const day = state.history[key];
   if (!day) return 0;
-  return new Set([...day.new, ...day.reviewed]).size;
+  return new Set([...day.new, ...day.reviewed].map(String)).size;
 }
 
 // How many different quotes were learned (first time) or reviewed across some days
@@ -852,8 +942,8 @@ function totalsFor(keys) {
   for (const key of keys) {
     const day = state.history[key];
     if (!day) continue;
-    day.new.forEach((id) => learned.add(id));
-    day.reviewed.forEach((id) => reviewed.add(id));
+    day.new.forEach((id) => learned.add(String(id)));
+    day.reviewed.forEach((id) => reviewed.add(String(id)));
   }
   return {
     learned: learned.size,
@@ -971,40 +1061,154 @@ function renderHome() {
   );
 
   el.dueText.textContent = all.due
-    ? `${all.due} ${all.due === 1 ? "quote is" : "quotes are"} due for review.`
+    ? `${all.due} ${all.due === 1 ? "item is" : "items are"} due for review.`
     : "Nothing is due for review right now.";
   el.review.hidden = all.due === 0;
   el.review.textContent = `Review ${all.due} due`;
 
-  // One card per topic, plus one for everything
-  const byTag = new Map();
-  for (const quote of state.quotes) {
-    for (const tag of quote.tags) {
-      if (!byTag.has(tag)) byTag.set(tag, []);
-      byTag.get(tag).push(quote);
-    }
-  }
-  const groups = [
-    ["all", "All quotes", state.quotes],
-    ...[...byTag]
-      .sort((a, b) => a[0].localeCompare(b[0]))
-      .map(([tag, list]) => [tag, capitalise(tag), list]),
-  ];
+  renderChooser();
+}
 
-  el.topics.replaceChildren(
-    ...groups.map(([tag, label, list]) => {
-      const counts = countsFor(list);
-      const card = make("button", "topic-card");
-      card.type = "button";
-      card.dataset.tag = tag;
-      card.append(
-        make("span", "topic-name", label),
-        make("span", "topic-meta", `${list.length} ${list.length === 1 ? "quote" : "quotes"}`),
-        make("span", "topic-counts", `${counts.long} long-term, ${counts.short} short-term, ${counts.new} not started`)
-      );
-      return card;
+// ---------- The topic chooser: tabs, search, chips ----------
+
+function quotesOfType(type) {
+  return state.quotes.filter((q) => q.type === type);
+}
+
+// [{ key, label, count }] for the topics used in a list, A to Z
+function topicList(items) {
+  const counts = new Map();
+  for (const q of items) {
+    for (const key of q.tagKeys) counts.set(key, (counts.get(key) || 0) + 1);
+  }
+  return [...counts]
+    .map(([key, count]) => ({ key, label: state.tagLabels.get(key), count }))
+    .sort((a, b) => a.label.localeCompare(b.label, undefined, { sensitivity: "base" }));
+}
+
+// "Faith", "Faith and Trials", "Faith, Trials and 3 more"
+function listNames(keys) {
+  const names = keys.map((k) => state.tagLabels.get(k) || k);
+  if (names.length <= 2) return names.join(" and ");
+  return `${names[0]}, ${names[1]} and ${names.length - 2} more`;
+}
+
+function makeChip(topic, selected) {
+  const chip = make("button", "chip", topic.label);
+  chip.type = "button";
+  chip.dataset.key = topic.key;
+  chip.setAttribute("aria-pressed", String(selected));
+  chip.append(make("span", "count", String(topic.count)));
+  return chip;
+}
+
+function renderTabs() {
+  el.typeTabs.replaceChildren(
+    ...Object.entries(TYPES).map(([type, info]) => {
+      const active = type === state.tab;
+      const tab = make("button", "type-tab", info.label);
+      tab.type = "button";
+      tab.id = `tab-${type}`;
+      tab.dataset.type = type;
+      tab.setAttribute("role", "tab");
+      tab.setAttribute("aria-selected", String(active));
+      tab.setAttribute("aria-controls", "type-panel");
+      tab.tabIndex = active ? 0 : -1;
+      tab.append(make("span", "count", String(quotesOfType(type).length)));
+      return tab;
     })
   );
+  el.typePanel.setAttribute("aria-labelledby", `tab-${state.tab}`);
+}
+
+function renderChooser() {
+  renderTabs();
+
+  const type = state.tab;
+  const items = quotesOfType(type);
+
+  // Nothing in this tab yet
+  el.typeEmpty.hidden = items.length > 0;
+  el.chooserBody.hidden = items.length === 0;
+  if (!items.length) {
+    el.typeEmpty.textContent =
+      state.fileStatus[type] === "broken"
+        ? `${TYPES[type].file} could not be read. Check it for a missing comma, quote mark or bracket.`
+        : TYPES[type].empty;
+    return;
+  }
+
+  const topics = topicList(items);
+  const selected = new Set(state.selection[type]);
+  const query = state.search.trim().toLowerCase();
+
+  let main;
+  let others = [];
+  if (query) {
+    // Searching: one flat list of every match
+    main = topics.filter((t) => t.label.toLowerCase().includes(query));
+  } else {
+    main = topics.filter((t) => t.count >= MIN_TOPIC_SIZE);
+    others = topics.filter((t) => t.count < MIN_TOPIC_SIZE);
+    if (!main.length) {
+      // Everything is small, so there is nothing to tuck away
+      main = others;
+      others = [];
+    }
+  }
+
+  el.chips.replaceChildren(...main.map((t) => makeChip(t, selected.has(t.key))));
+  el.noMatch.hidden = !(query && !main.length);
+
+  el.other.hidden = others.length === 0;
+  el.otherLabel.textContent = `Other topics (${others.length})`;
+  el.otherChips.replaceChildren(...others.map((t) => makeChip(t, selected.has(t.key))));
+  el.other.open = state.othersOpen || others.some((t) => selected.has(t.key));
+
+  renderSelectionSummary();
+}
+
+function renderSelectionSummary() {
+  const type = state.tab;
+  const info = TYPES[type];
+  const items = quotesOfType(type);
+  const keys = state.selection[type];
+
+  const pool = keys.length ? items.filter((q) => q.tagKeys.some((k) => keys.includes(k))) : items;
+  const counts = countsFor(pool);
+  const learned = pool.filter((q) => boxOf(q) > 0).length;
+  const noun = pool.length === 1 ? info.one : info.many;
+  const progress = `${counts.long} long-term, ${counts.short} short-term, ${counts.new} not started`;
+  const pace = `You learn ${SESSION_SIZE} at a time.`;
+
+  el.selectionSummary.textContent = keys.length
+    ? `${pool.length} ${noun} from ${listNames(keys)}. ${progress}. ${pace}`
+    : `${pool.length} ${noun} in total. ${progress}. ${pace}`;
+
+  el.learn.textContent = keys.length ? "Learn selected topics" : "Start learning";
+  el.learn.disabled = pool.length === 0;
+  el.reviewLearned.hidden = learned === 0;
+  el.reviewLearned.textContent = `Review learned (${learned})`;
+  el.clear.hidden = keys.length === 0;
+}
+
+function setTab(type) {
+  if (!TYPES[type] || type === state.tab) return;
+  state.tab = type;
+  state.search = "";
+  el.search.value = "";
+  savePrefs();
+  renderChooser();
+}
+
+function toggleTopic(chip) {
+  const keys = state.selection[state.tab];
+  const index = keys.indexOf(chip.dataset.key);
+  if (index >= 0) keys.splice(index, 1);
+  else keys.push(chip.dataset.key);
+
+  chip.setAttribute("aria-pressed", String(index < 0));
+  renderSelectionSummary();
 }
 
 function showHome() {
@@ -1020,17 +1224,33 @@ function showHome() {
   }
 }
 
-// Due quotes come first, then new ones, then the rest.
-function buildDeck() {
-  const pool =
-    state.tag === "all"
-      ? state.quotes
-      : state.quotes.filter((q) => q.tags.includes(state.tag));
+// The quotes for what was chosen: one kind, and any of the chosen topics.
+function sessionPool() {
+  const { type, tags } = state.session;
+  let pool = state.quotes;
+  if (type) pool = pool.filter((q) => q.type === type);
+  if (tags.length) pool = pool.filter((q) => q.tagKeys.some((k) => tags.includes(k)));
+  return pool;
+}
 
-  const due = shuffle(pool.filter(isDue));
-  if (state.dueOnly) {
-    state.deck = due;
+function buildDeck() {
+  const pool = sessionPool();
+  const { kind } = state.session;
+
+  if (kind === "due") {
+    // Only what is due, the most overdue first
+    const byDue = (a, b) => state.progress[keyOf(a)].due - state.progress[keyOf(b)].due;
+    state.deck = pool.filter(isDue).sort(byDue);
+  } else if (kind === "learned") {
+    // Everything you have learned: due first, then whatever you saw longest ago
+    const byLast = (a, b) => {
+      if (isDue(a) !== isDue(b)) return isDue(a) ? -1 : 1;
+      return state.progress[keyOf(a)].last - state.progress[keyOf(b)].last;
+    };
+    state.deck = pool.filter((q) => boxOf(q) > 0).sort(byLast);
   } else {
+    // Learning: due first, then new ones, then the rest
+    const due = shuffle(pool.filter(isDue));
     const fresh = shuffle(pool.filter((q) => category(q) === "new"));
     const rest = shuffle(pool.filter((q) => !isDue(q) && category(q) !== "new"));
     state.deck = [...due, ...fresh, ...rest];
@@ -1038,17 +1258,28 @@ function buildDeck() {
   state.position = 0;
 }
 
-function startPlay(tag, dueOnly) {
-  state.tag = tag;
-  state.dueOnly = dueOnly;
+function sessionLabel() {
+  const { type, tags, kind } = state.session;
+  if (kind === "due") return "Review due";
+  if (kind === "learned") return "Review learned";
+  if (!tags.length) return `All ${TYPES[type].many}`;
+  return listNames(tags);
+}
+
+function startPlay(type, tags, kind) {
+  state.session = { type, tags: [...tags], kind };
   buildDeck();
   if (!state.deck.length) {
     showHome();
     return;
   }
+  state.roundCount = 0;
+  state.roundLog = [];
   state.view = "play";
   el.home.hidden = true;
   el.play.hidden = false;
+  el.sheet.hidden = false;
+  el.round.hidden = true;
   showQuote();
 }
 
@@ -1057,13 +1288,23 @@ function startPlay(tag, dueOnly) {
 // =====================================================================
 
 function setPhase(phase) {
-  state.phase = phase;
+  state.phase = phase; // "study", "test", "between" (waiting for the next test) or "done"
   el.studyTip.hidden = phase !== "study";
   el.setup.hidden = phase !== "study";
   el.testName.hidden = phase === "study";
   el.actionsStudy.hidden = phase !== "study";
   el.actionsTest.hidden = phase !== "test";
+  el.actionsBetween.hidden = phase !== "between";
   el.actionsDone.hidden = phase !== "done";
+}
+
+function testsPerQuote() {
+  return Math.max(1, Math.min(TESTS_PER_QUOTE, Object.keys(MODES).length));
+}
+
+// How many quotes this round holds
+function roundTotal() {
+  return Math.max(1, Math.min(SESSION_SIZE, state.deck.length));
 }
 
 function showQuote() {
@@ -1074,42 +1315,94 @@ function showQuote() {
 
 function showStudy() {
   state.ctrl = null;
-  const topic = state.tag === "all" ? "All quotes" : capitalise(state.tag);
+  state.testNumber = 0;
+  state.results = [];
+
+  const tests = testsPerQuote();
+  const n = state.counted ? state.roundCount : state.roundCount + 1;
   const label = isDue(state.current) ? " (due for review)" : "";
-  el.progress.textContent = `${topic}: quote ${state.position + 1} of ${state.deck.length}${label}`;
+  el.progress.textContent = `${sessionLabel()}: item ${n} of ${roundTotal()}${label}`;
   el.prompt.textContent = state.current.prompt || "";
+  el.studyTip.textContent =
+    `Read it through a few times. Then you will do ${tests} different ${tests === 1 ? "test" : "tests"} on it.`;
   el.stage.replaceChildren(make("div", "quote", state.current.answer));
   el.result.textContent = "";
   setPhase("study");
 }
 
 // A random test each time (never the same one twice running)
+// A random test each time. It is never one you have already done on this
+// quote, and never the same as the test just before.
 function pickMode() {
-  const keys = Object.keys(MODES).filter((k) => k !== state.lastMode);
+  const used = new Set(state.results.map((r) => r.mode));
+  if (state.lastMode) used.add(state.lastMode);
+
+  let keys = Object.keys(MODES).filter((k) => !used.has(k));
+  if (!keys.length) keys = Object.keys(MODES).filter((k) => k !== state.lastMode);
   return keys[Math.floor(Math.random() * keys.length)];
 }
 
 function startTest() {
   if (state.phase !== "study") return;
+  state.testNumber = 1;
+  state.results = [];
+  launchTest();
+}
+
+function nextTest() {
+  if (state.phase !== "between") return;
+  state.testNumber += 1;
+  launchTest();
+}
+
+function launchTest() {
   state.activeMode = pickMode();
   state.lastMode = state.activeMode;
+  state.testResult = null;
 
   const mode = MODES[state.activeMode];
   state.ctrl = mode.build(el.stage, state.current.answer, state.level);
-  el.testName.textContent = mode.label;
+  el.testName.textContent = `Test ${state.testNumber} of ${testsPerQuote()}: ${mode.label}`;
   el.result.textContent = "";
   setPhase("test");
   state.ctrl.focus();
 }
 
-function recordOnce(perfect) {
-  if (state.counted) return;
-  state.counted = true;
-  recordResult(state.current, perfect);
-}
+// Called when a test is finished (all right, or answers shown)
+function finishTest(message) {
+  state.results.push({
+    mode: state.activeMode,
+    perfect: state.testResult === true,
+    strong: isStrongTest(),
+  });
+  const total = testsPerQuote();
 
-function finish(message) {
-  el.result.textContent = message;
+  // More tests to do on this quote
+  if (state.results.length < total) {
+    el.result.textContent = message;
+    el.nextTest.textContent = `Start test ${state.results.length + 1} of ${total}`;
+    setPhase("between");
+    el.nextTest.focus();
+    return;
+  }
+
+  // That was the last test: record how it went (once per quote)
+  let summary;
+  if (!state.counted) {
+    state.counted = true;
+    const allPerfect = state.results.every((r) => r.perfect);
+    recordResult(state.current, state.results);
+    state.roundCount += 1;
+    state.roundLog.push({ label: state.current.prompt || "Item", perfect: allPerfect });
+    summary = allPerfect
+      ? total === 1 ? "Passed first time." : `All ${total} tests passed first time.`
+      : "You will see this one again soon.";
+  } else {
+    summary = "This was extra practice, so it is not recorded.";
+  }
+
+  el.result.textContent = `${message} ${summary}`;
+  el.next.textContent = state.roundCount >= roundTotal() ? "Finish round" : "Next quote";
   setPhase("done");
   el.next.focus();
 }
@@ -1117,28 +1410,65 @@ function finish(message) {
 function checkAnswer() {
   if (state.phase !== "test" || !state.ctrl) return;
   const outcome = state.ctrl.check();
-  recordOnce(outcome.complete);
-  if (outcome.complete) finish(outcome.message);
+  if (state.testResult === null) state.testResult = outcome.complete; // the first check is what counts
+  if (outcome.complete) finishTest(outcome.message);
   else el.result.textContent = outcome.message;
 }
 
 function revealAnswers() {
   if (state.phase !== "test" || !state.ctrl) return;
+  if (state.testResult === null) state.testResult = false;
   state.ctrl.reveal();
-  recordOnce(false);
-  finish("Answers shown. Try the quote again when you are ready.");
+  finishTest("Answers shown.");
 }
 
 function nextQuote() {
   state.position += 1;
   if (state.position >= state.deck.length) {
-    if (state.dueOnly) {
-      showHome(); // finished the review round
+    if (state.session.kind !== "learn") {
+      // A review has a fixed list, and it has run out
+      if (state.roundCount > 0) showRound();
+      else showHome();
       return;
     }
     buildDeck();
   }
   showQuote();
+}
+
+// After the last test on a quote: another quote, or the end of the round
+function afterQuote() {
+  if (state.roundCount >= roundTotal()) showRound();
+  else nextQuote();
+}
+
+function showRound() {
+  buildDeck(); // what is left, so we know whether to offer "more"
+  const more = state.deck.length > 0;
+  const n = state.roundLog.length;
+
+  el.sheet.hidden = true;
+  el.round.hidden = false;
+  el.roundSummary.textContent = `You worked through ${n} ${n === 1 ? "item" : "items"}.`;
+  el.roundList.replaceChildren(
+    ...state.roundLog.map((entry) => {
+      const item = make("li", "round-item");
+      item.append(
+        make("span", "round-label", entry.label),
+        make("span", entry.perfect ? "round-status is-ok" : "round-status", entry.perfect ? "Passed all tests" : "Needs more practice")
+      );
+      return item;
+    })
+  );
+
+  const verb = state.session.kind === "learn" ? "Learn" : "Review";
+  el.roundMore.textContent = `${verb} ${SESSION_SIZE} more`;
+  el.roundMore.hidden = !more;
+  try {
+    window.scrollTo({ top: 0 });
+  } catch (err) {
+    // ignore
+  }
 }
 
 // ---------- Difficulty ----------
@@ -1180,12 +1510,47 @@ function wireUpControls() {
     });
   }
 
-  el.topics.addEventListener("click", (event) => {
-    const card = event.target.closest("button[data-tag]");
-    if (card) startPlay(card.dataset.tag, false);
+  // Tabs for the kind of content
+  el.typeTabs.addEventListener("click", (event) => {
+    const tab = event.target.closest("button[data-type]");
+    if (tab) setTab(tab.dataset.type);
+  });
+  el.typeTabs.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    const types = Object.keys(TYPES);
+    const step = event.key === "ArrowRight" ? 1 : -1;
+    const next = types[(types.indexOf(state.tab) + step + types.length) % types.length];
+    setTab(next);
+    $(`tab-${next}`).focus();
+    event.preventDefault();
   });
 
-  el.review.addEventListener("click", () => startPlay("all", true));
+  // Search and topic chips
+  el.search.addEventListener("input", () => {
+    state.search = el.search.value;
+    renderChooser();
+  });
+  for (const group of [el.chips, el.otherChips]) {
+    group.addEventListener("click", (event) => {
+      const chip = event.target.closest("button[data-key]");
+      if (chip) toggleTopic(chip);
+    });
+  }
+  el.other.addEventListener("toggle", () => {
+    state.othersOpen = el.other.open;
+  });
+  el.clear.addEventListener("click", () => {
+    state.selection[state.tab] = [];
+    renderChooser();
+    el.learn.focus();
+  });
+
+  // Starting a round
+  el.learn.addEventListener("click", () => startPlay(state.tab, state.selection[state.tab], "learn"));
+  el.reviewLearned.addEventListener("click", () =>
+    startPlay(state.tab, state.selection[state.tab], "learned")
+  );
+  el.review.addEventListener("click", () => startPlay(null, [], "due"));
 
   el.difficulty.addEventListener("click", (event) => {
     const button = event.target.closest("button[data-level]");
@@ -1200,12 +1565,53 @@ function wireUpControls() {
     savePrefs();
   });
 
+  // Playing
   el.start.addEventListener("click", startTest);
   el.skip.addEventListener("click", nextQuote);
   el.check.addEventListener("click", checkAnswer);
   el.reveal.addEventListener("click", revealAnswers);
+  el.nextTest.addEventListener("click", nextTest);
   el.again.addEventListener("click", showStudy);
-  el.next.addEventListener("click", nextQuote);
+  el.next.addEventListener("click", afterQuote);
+
+  // End of a round
+  el.roundMore.addEventListener("click", () =>
+    startPlay(state.session.type, state.session.tags, state.session.kind)
+  );
+  el.roundHome.addEventListener("click", showHome);
+}
+
+// Reads one JSON file. A missing optional file is not an error.
+async function loadFile(type) {
+  try {
+    const response = await fetch(TYPES[type].file);
+    if (response.status === 404) return { items: [], status: "missing" };
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    if (!Array.isArray(data)) throw new Error("not a list");
+
+    const items = data
+      .filter((item) => item && item.answer)
+      .map((item) => ({ ...item, type: item.type || type }))
+      .filter((item) => TYPES[item.type]);
+    return { items, status: "ok" };
+  } catch (err) {
+    return { items: [], status: "broken" };
+  }
+}
+
+// Works out each item's topics. "Faith" and "faith" count as one topic.
+function prepareTopics(quote) {
+  const keys = [];
+  for (const raw of Array.isArray(quote.tags) ? quote.tags : []) {
+    const label = String(raw).trim();
+    if (!label) continue;
+    const key = label.toLowerCase();
+    if (!state.tagLabels.has(key)) state.tagLabels.set(key, capitalise(label));
+    if (!keys.includes(key)) keys.push(key);
+  }
+  quote.tagKeys = keys;
+  return quote;
 }
 
 async function init() {
@@ -1214,23 +1620,18 @@ async function init() {
   loadHistory();
   wireUpControls();
 
-  try {
-    const response = await fetch("data.json");
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
+  const types = Object.keys(TYPES);
+  const results = await Promise.all(types.map(loadFile));
+  types.forEach((type, i) => (state.fileStatus[type] = results[i].status));
 
-    state.quotes = data
-      .filter((item) => item && item.answer && TEXT_TYPES.includes(item.type || "quote"))
-      .map((item) => ({ ...item, tags: Array.isArray(item.tags) ? item.tags : [] }));
-  } catch (err) {
+  // data.json is required. The others are optional.
+  const main = results[types.indexOf("quote")];
+  if (main.status !== "ok" || !main.items.length) {
     showLoadError();
     return;
   }
 
-  if (!state.quotes.length) {
-    showLoadError();
-    return;
-  }
+  state.quotes = results.flatMap((r) => r.items).map(prepareTopics);
 
   // Every plain word in the data, for believable swaps
   const pool = new Set();

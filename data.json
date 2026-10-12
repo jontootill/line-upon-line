@@ -159,7 +159,7 @@
     "prompt": "Elder Dale G Renlund, Lifelong conversion, BYU speeches, Sept 2021",
     "answer": "The sacrament is the next ordinance needed every week for the rest of our lives.",
     "tags": [
-      "ordinances and temples"
+      "sacrament"
     ]
   },
   {
@@ -168,7 +168,7 @@
     "prompt": "Pres Russell M Nelson, Focus on the temple, Gen Conf, Oct 2022",
     "answer": "Increased time in the temple will bless your life in ways nothing else can.",
     "tags": [
-      "ordinances and temples"
+      "temple"
     ]
   },
   {
@@ -177,7 +177,7 @@
     "prompt": "Pres Russell M Nelson, Now is the Time, Gen Conf, Apr 2022",
     "answer": "Counter worldly ways by focusing on the eternal blessings of the temple. Your time there brings bessings for eternity",
     "tags": [
-      "ordinances and temples"
+      "temple"
     ]
   },
   {
@@ -186,7 +186,7 @@
     "prompt": "Elder Richard H Winkel, The temple is about families, Gen Conf, Oct 2006",
     "answer": "When you come to the temple you will love your family with a deeper love than you have ever felt before.",
     "tags": [
-      "ordinances and temples"
+      "temple"
     ]
   },
   {
@@ -195,7 +195,7 @@
     "prompt": "Sister Neill F Marriott, Gen Women's Conf, Sept 2014",
     "answer": "Wherever a temple is built, it pushes back darkness.",
     "tags": [
-      "ordinances and temples"
+      "temples"
     ]
   },
   {
@@ -204,7 +204,7 @@
     "prompt": "Elder Gary E Stevenson, Sacred homes, sacred temples, Gen Conf, Apr 2009",
     "answer": "Understanding the eternal nature of the temple will draw you to your family; understanding the eternal nature of the family will draw you to the temple.",
     "tags": [
-      "ordinances and temples"
+      "temple", "family"
     ]
   },
   {
@@ -213,7 +213,7 @@
     "prompt": "Elder David A Bednar, Exceeding great and precious things, Gen Conf, Oct 2017",
     "answer": "Our Sabbath and temple experiences should be spiritual catalysts",
     "tags": [
-      "ordinances and temples"
+      "temple", "Sabbath day"
     ]
   },
   {
@@ -222,7 +222,7 @@
     "prompt": "Elder John A Widtsoe, Temple worship, Apr 1921",
     "answer": "Temple worship is an avenue to exaltation in God's kingdom.",
     "tags": [
-      "ordinances and temples"
+      "temple"
     ]
   },
   {
@@ -231,7 +231,7 @@
     "prompt": "President Harold B Lee, Gen Conf, April 1957",
     "answer": "Parents who themselves have lightly regarded their temple covenants can expect little better from their children",
     "tags": [
-      "ordinances and temples"
+      "covenants", "family","parenting"
     ]
   },
   {
@@ -240,7 +240,7 @@
     "prompt": "Pres Russell M Nelson, The temple and your spiritual foundation, Gen Conf, Oct 2021",
     "answer": "If you don’t yet love to attend the temple, go more often—not less. Let the Lord, through His Spirit, teach and inspire you there. I promise you that over time, the temple will become a place of safety, solace, and revelation",
     "tags": [
-      "ordinances and temples"
+      "temple"
     ]
   },
   {
@@ -249,7 +249,7 @@
     "prompt": "President Howard W Hunter, We have a work to do, Mar 1995",
     "answer": "There is no work equal to that done in the temple.",
     "tags": [
-      "ordinances and temples"
+      "temple"
     ]
   },
   {
@@ -258,7 +258,7 @@
     "prompt": "Pres Russell M Nelson, Gen Conf, Apr 2024",
     "answer": "The temple is the gateway to the greatest blessings God has in store for each of us.",
     "tags": [
-      "ordinances and temples"
+      "temple"
     ]
   },
   {
@@ -267,7 +267,7 @@
     "prompt": "Pres Russell M Nelson, Rejoice in the gifts, Gen Conf, Apr 2024",
     "answer": "Regular temple worship will enhance the way you see yourself and how you fit into God’s magnificent plan.",
     "tags": [
-      "ordinances and temples"
+      "temple", "plan of salvation"
     ]
   },
   {
@@ -276,7 +276,7 @@
     "prompt": "Elder Ulisses Soares, Covenant confidence, Gen Conf, Apr 2024",
     "answer": "If we change our preparation to enter the temple, we will change our experience in the temple, which will transform our lives outside of the temple.",
     "tags": [
-      "ordinances and temples"
+      "temple"
     ]
   },
   {
@@ -285,7 +285,7 @@
     "prompt": "Pres Russell M Nelson, The Book of Mormon, Gen Conf, Oct 2017",
     "answer": "As you prayerfully study the Book of Mormon every day, you will make better decisions—every day",
     "tags": [
-      "scriptures"
+      "scriptures", "Book of Mormon"
     ]
   },
   {
@@ -294,7 +294,7 @@
     "prompt": "Pres Russell M Nelson, The Book of Mormon, Gen Conf, Oct 2017",
     "answer": "As you daily immerse yourself in the Book of Mormon, you can be immunized against the evils of the day",
     "tags": [
-      "scriptures"
+      "scriptures", "Book of Mormon"
     ]
   },
   {
@@ -312,7 +312,7 @@
     "prompt": "Pres Russell M Nelson, The Power of Spiritual Momentum, Gen Conf, Apr 2022",
     "answer": "With frightening speed, a testimony that is not nourished daily by the good word of God can crumble",
     "tags": [
-      "scriptures"
+      "scriptures", "testimony"
     ]
   },
   {
@@ -330,7 +330,7 @@
     "prompt": "Douglas D Holmes, Deep in our heart, Gen Conf, Apr 2020",
     "answer": "The word [of God] initiates and increases our faith in Christ and fuels within us a desire to become more like the Savior",
     "tags": [
-      "scriptures"
+      "scriptures", "faith"
     ]
   },
   {
@@ -348,7 +348,7 @@
     "prompt": "Elder D Todd Christofferson, The blessing of scriptures, Gen Conf, Apr 2010",
     "answer": "Scriptures are revelation, and they will bring added revelation.",
     "tags": [
-      "scriptures"
+      "scriptures", "revelation"
     ]
   },
   {
@@ -492,7 +492,7 @@
     "prompt": "Elder Russell M Nelson, The Sabbath is a delight, Gen Conf, Apr 2015",
     "answer": "No other work transcends that of righteous, intentional parenting",
     "tags": [
-      "parenting and marriage"
+      "parenting"
     ]
   },
   {
@@ -501,7 +501,7 @@
     "prompt": "Elder Dieter F Uchtdorf, Jesus Christ is the strength of parents, Gen Conf, Apr 2023",
     "answer": "Make your home a house of prayer, learning, and faith; a house of joyful experiences; a place of belonging; a house of God.",
     "tags": [
-      "parenting and marriage"
+      "family"
     ]
   },
   {
@@ -510,7 +510,7 @@
     "prompt": "Elder L. Whitney Clayton, Marriage: watch and learn, Gen Conf, Apr 2013",
     "answer": "Marriage is a gift from God to us; the quality of our marriages is a gift from us to Him",
     "tags": [
-      "parenting and marriage"
+      "marriage"
     ]
   },
   {
@@ -519,7 +519,7 @@
     "prompt": "Pres Russell M Nelson, Salvation and exaltation, Gen Conf, Apr 2008",
     "answer": "Salvation is an individual matter, exaltation is a family matter.",
     "tags": [
-      "parenting and marriage"
+      "family"
     ]
   },
   {
@@ -528,7 +528,7 @@
     "prompt": "Jan E Newman, Preserving the voice, Gen Conf, Oct 2023",
     "answer": "We can show them how to find the Savior in the scriptures and build their foundations on Him.",
     "tags": [
-      "parenting and marriage"
+      "scriptures"
     ]
   },
   {
@@ -546,7 +546,7 @@
     "prompt": "Larry Gibson, Sacred Keys of the Priesthood, Gen Conf, Apr 2011",
     "answer": "Service is the very foundation of the priesthood",
     "tags": [
-      "service"
+      "service", "priesthood"
     ]
   },
   {
@@ -555,7 +555,7 @@
     "prompt": "Pres Howard W Hunter, No Less Serviceable, BYU speech, Sept 1990",
     "answer": "Serve and grow, faithfully and quietly.",
     "tags": [
-      "service"
+      "service", "growth"
     ]
   },
   {
@@ -573,7 +573,7 @@
     "prompt": "Pres Russell M Nelson, Christ is Risen, Gen Conf, Apr 2021",
     "answer": "True repentance begins with faith that Jesus Christ has the power to cleanse, heal, and strengthen us",
     "tags": [
-      "repentance and forgiveness"
+      "repentance", "faith"
     ]
   },
   {
@@ -762,7 +762,7 @@
     "prompt": "Pres Dallin H Oaks, The Gospel of Jesus Christ is for all, Gen Conf, Oct 2026",
     "answer": "Protect yourself with the weekly renewing of your covenants by partaking of the sacrament and with consistent efforts to live according to those sacred covenants.",
     "tags": [
-      "covenants"
+      "covenants", "sacrament"
     ]
   },
   {
@@ -890,6 +890,489 @@
     "tags": [
       "prayer"
     ]
+  },
+  {
+    "id": 105,
+    "type": "quote",
+    "prompt": "Pres Nelson, The Book of Mormon, Apr 2017 GC",
+    "answer": "The full power of the gospel of Jesus Christ is contained in the Book of Mormon.",
+    "tags": ["Book of Mormon"]
+  },
+  {
+    "id": 107,
+    "type": "quote",
+    "prompt": "Pres Nelson, Peacemakers needed, Gen Conf, Apr 2023",
+    "answer": "True disciples of Jesus Christ are peacemakers.",
+    "tags": []
+  },
+  {
+    "id": 109,
+    "type": "quote",
+    "prompt": "Pres Nelson, We can do better and be better, Gen Conf, Apr 2019",
+    "answer": "When we choose to repent, [we choose to change], we choose to become more like Jesus Christ!",
+    "tags": ["repentance"]
+  },
+  {
+    "id": 138,
+    "type": "quote",
+    "prompt": "Elder Dale G Renlund, Consider the goodness, Gen Conf, Apr 2020",
+    "answer": "The Savior loves to restore what you cannot restore; He loves to heal wounds you cannot heal; He loves to fix what has been irreparably broken; He compensates for any unfairness inflicted on you; and He loves to permanently mend even shattered hearts.",
+    "tags": ["Jesus Christ"]
+  },
+  {
+    "id": 139,
+    "type": "quote",
+    "prompt": "Elder David A Bednar, In the strength of the Lord, BYU talk, Oct 2001",
+    "answer": "The enabling power of the Atonement of Christ strengthens us to do things we could never do on our own.",
+    "tags": ["atonement"]
+  },
+  {
+    "id": 140,
+    "type": "quote",
+    "prompt": "Pres Russell M Nelson, Overcoming the world, Gen Conf, Oct 2022",
+    "answer": "One crucial element of this gathering is preparing a people who are able, ready, and worthy to receive the Lord when He comes again,",
+    "tags": ["second coming"]
+  },
+  {
+    "id": 141,
+    "type": "quote",
+    "prompt": "Pres Russell M Nelson, Let God Prevail, Gen Conf, Oct 2020",
+    "answer": "Anytime we do anything that helps anyone﻿—on either side of the veil﻿—to make and keep their covenants with God, we are helping to gather Israel.",
+    "tags": ["covenants"]
+  },
+  {
+    "id": 142,
+    "type": "quote",
+    "prompt": "Elder L Tom Perry, Strive to be temple worthy, ricks speeches, 1989",
+    "answer": "Faithful consistency brings miracles.",
+    "tags": ["miracles", "faith"]
+  },
+  {
+    "id": 143,
+    "type": "quote",
+    "prompt": "Elder Russell M Nelson, The Sabbath is a delight, Gen Conf, Apr 2015",
+    "answer": "My conduct and my attitude on the Sabbath [constitutes] a sign between me and my Heavenly Father.",
+    "tags": ["Sabbath day"]
+  },
+  {
+    "id": 144,
+    "type": "quote",
+    "prompt": "Elder Quentin L Cook, Conversion to the Will of God, Gen Conf, Apr 2022",
+    "answer": "True conversion is brought about by the conscious acceptance and commitment to follow the will of God",
+    "tags": ["conversion"]
+  },
+  {
+    "id": 145,
+    "type": "quote",
+    "prompt": "Elder Neal A Maxwell, In Him All Things Hold Together, Mar 1991",
+    "answer": "Those who 'shine as lights in the world' have no need to seek the spotlight",
+    "tags": ["disciple of Christ"]
+  },
+  {
+    "id": 146,
+    "type": "quote",
+    "prompt": "Elder Joseph B Wirthlin, Let your light so shine, LDS living, Dec 2005",
+    "answer": "Familiarity with darkness can eventually erode our sensitivity until we choose darkness rather than light.",
+    "tags": ["Holy Ghost"]
+  },
+  {
+    "id": 147,
+    "type": "quote",
+    "prompt": "Bradley R Wilcox, worthiness is not flawlessness, Gen Conf, Oct 2021",
+    "answer": "We are not just walking toward God and Christ. We are walking with Them.",
+    "tags": ["God", "Jesus Christ"]
+  },
+  {
+    "id": 148,
+    "type": "quote",
+    "prompt": "Elder David A Bednar, The tender mercies of the Lord, Gen Conf, Apr 2005",
+    "answer": "It is our hearts and our aspirations and our obedience which definitively determine whether we are counted as one of God’s chosen.",
+    "tags": ["obedience"]
+  },
+  {
+    "id": 149,
+    "type": "quote",
+    "prompt": "Elder Christophe G. Giraud-Carrier, We are His children, Gen Conf, Oct 2023",
+    "answer": "The way we treat each other is a direct reflection of our understanding of and appreciation for the ultimate sacrifice and Atonement of His Son, our Savior, Jesus Christ.",
+    "tags": ["atonement"]
+  },
+  {
+    "id": 150,
+    "type": "quote",
+    "prompt": "Elder Russell M Nelson, The price of priesthood power, Gen Conf, Apr 2016",
+    "answer": "If we will humbly present ourselves before the Lord and ask Him to teach us, He will show us how to increase our access to His power.",
+    "tags": ["learning", "grace"]
+  },
+  {
+    "id": 151,
+    "type": "quote",
+    "prompt": "Pres Russell M Nelson, Think celestial, Gen Conf, Oct 2023",
+    "answer": "Obedience paves the way for a joyful life for you today and a grand, eternal reward tomorrow.",
+    "tags": ["obedience"]
+  },
+  {
+    "id": 152,
+    "type": "quote",
+    "prompt": "Elder David A Bednar, The blessed and happy state, Provo MTC, June 2022",
+    "answer": "Obedience to eternal laws is the ultimate source of true happiness.",
+    "tags": ["obedience", "joy"]
+  },
+  {
+    "id": 153,
+    "type": "quote",
+    "prompt": "Pres Russell M Nelson, Grow into the principle, ensign, Jan 2012",
+    "answer": "Worthiness does not require perfection, but it requires that we strive for increased purity.",
+    "tags": ["growth"]
+  },
+  {
+    "id": 154,
+    "type": "quote",
+    "prompt": "Pres Russell M Nelson, Grow into the principle, ensign, Jan 2012",
+    "answer": "When we receive revelation, we spend time in the presence of God as He reveals His mind, will, and voice unto us",
+    "tags": ["revelation"]
+  },
+  {
+    "id": 155,
+    "type": "quote",
+    "prompt": "Elder Ulisses Soares, Always remember Him, BYU, Feb 2019",
+    "answer": "happiness and peace in this life and in the world to come depend upon remembering the Savior and your covenants with Him daily",
+    "tags": ["joy", "covenants"]
+  },
+  {
+    "id": 156,
+    "type": "quote",
+    "prompt": "Pres. Dallin H Oaks, The Gospel of Jesus Christ is for all, Gen Conf, Oct 2026",
+    "answer": "Never let your secular learning limit your spiritual horizons.",
+    "tags": ["learning"]
+  },
+  {
+    "id": 157,
+    "type": "quote",
+    "prompt": "Sis Kristin M Yee, Ministering, Gen Conf, Apr 2026",
+    "answer": "When we minister as He would, we begin to think, feel, and love as He would.",
+    "tags": ["service"]
+  },
+  {
+    "id": 158,
+    "type": "quote",
+    "prompt": "Elder Ronald A Rasband, Love like Jesus, Gen Conf, Oct 2026",
+    "answer": "By divine design everyone must choose for themselves to follow Jesus Christ.",
+    "tags": ["disciple of Christ"]
+  },
+  {
+    "id": 159,
+    "type": "quote",
+    "prompt": "Elder Quentin L Cook, Integrity and virtue, Gen Conf, Oct 2026",
+    "answer": "True happiness, often translated as blessedness, is the actual outcome of integrity and being virtuous.",
+    "tags": ["joy"]
+  },
+  {
+    "id": 160,
+    "type": "quote",
+    "prompt": "Pres Dallin H Oaks, The Gospel of Jesus Christ is for all, Gen Conf, Oct 2026",
+    "answer": "The Book of Mormon is a great witness that the Lord loves all people and reaches out to all, everywhere.",
+    "tags": ["Book of Mormon", "love"]
+  },
+  {
+    "id": 161,
+    "type": "quote",
+    "prompt": "Elder Henry B Eyring, Proved and strengthened in Christ, Gen Conf, Oct 2025",
+    "answer": "[Proving moments] are evidence that God loves you enough to refine and strengthen you.",
+    "tags": ["trials"]
+  },
+  {
+    "id": 162,
+    "type": "quote",
+    "prompt": "Elder Neil L Anderson, Courage born of our faith, Gen Conf, Oct 2026",
+    "answer": "We need stillness to nourish our faith in Christ.",
+    "tags": ["faith"]
+  },
+  {
+    "id": 163,
+    "type": "quote",
+    "prompt": "Elder Russell M Nelson, The Sabbath is a delight, Gen Conf, Apr 2015",
+    "answer": "Faith in God engenders a love for the Sabbath; faith in the Sabbath engenders a love for God.",
+    "tags": ["faith", "Sabbath day"]
+  },
+  {
+    "id": 164,
+    "type": "quote",
+    "prompt": "Elder Dale G Renlund, The Powerful, Virtuous Cycle of the Doctrine of Christ, Gen Conf, Apr 2024",
+    "answer": "I invite you to live the doctrine of Christ repeatedly, iteratively, and intentionally and help others on their way.",
+    "tags": ["doctrine of Christ"]
+  },
+  {
+    "id": 165,
+    "type": "quote",
+    "prompt": "Elder Patrick Kearon, God's Intent Is to Bring You Home, Gen Conf, Apr 2024",
+    "answer": "Everything about the Father’s plan for His beloved children is designed to bring everyone home.",
+    "tags": ["plan of salvation"]
+  },
+  {
+    "id": 166,
+    "type": "quote",
+    "prompt": "Elder Quentin L Cook, The Atonement of Jesus Christ Provides the Ultimate Rescue, Gen Conf, Apr 2025",
+    "answer": "As we turn to Jesus Christ, the Savior of the world, He rescues us from the storms of life through His Atonement.",
+    "tags": ["atonement", "trials"]
+  },
+  {
+    "id": 167,
+    "type": "quote",
+    "prompt": "Elder D Todd Christofferson, The Testimony of Jesus, Gen Conf, Apr 2024",
+    "answer": "My invitation is to act now to secure your place as one who is valiant in the testimony of Jesus.",
+    "tags": ["disciple of Christ"]
+  },
+  {
+    "id": 168,
+    "type": "quote",
+    "prompt": "Elder Ulisses Soares, Covenant Confidence through Jesus Christ, Gen Conf, Apr 2024",
+    "answer": "When we enter the Lord’s house, we embark on a sacred journey of learning to become higher and holier disciples of Christ.",
+    "tags": ["temples"]
+  },
+  {
+    "id": 169,
+    "type": "quote",
+    "prompt": "Elder Gerrit W Gong, All Things for Our Good, Gen Conf, Apr 2024",
+    "answer": "In time and eternity, the purpose of Creation and the nature of God Himself are to bring all things together for our good.",
+    "tags": []
+  },
+  {
+    "id": 170,
+    "type": "quote",
+    "prompt": "Elder David A Bednar, Be Still, and Know That I Am God, Gen Conf, Apr 2024",
+    "answer": "We can be still and know that God is our Heavenly Father, we are His children, and Jesus Christ is our Savior.",
+    "tags": []
+  },
+  {
+    "id": 171,
+    "type": "quote",
+    "prompt": "Elder Neil L Andersen, The Triumph of Hope, Gen Conf, Oct 2024",
+    "answer": "Hope is a living gift, a gift that grows as we increase our faith in Jesus Christ.",
+    "tags": []
+  },
+  {
+    "id": 172,
+    "type": "quote",
+    "prompt": "Elder Dieter F Uchtdorf, Nourish the Roots, and the Branches Will Grow, Gen Conf, Oct 2024",
+    "answer": "The branches of your testimony will draw strength from your deepening faith in Heavenly Father and His Beloved Son.",
+    "tags": []
+  },
+  {
+    "id": 173,
+    "type": "quote",
+    "prompt": "Elder Ronald A Rasband, Behold I Am the Light Which Ye Shall Hold Up, Gen Conf, Oct 2024",
+    "answer": "We hold up the Lord’s light when we hold fast to our covenants and when we support our living prophet.",
+    "tags": []
+  },
+  {
+    "id": 174,
+    "type": "quote",
+    "prompt": "Elder Dale G Renlund, Personal Preparation to Meet the Savior, Gen Conf, Apr 2025",
+    "answer": "Follow the Savior’s teachings. His instructions are neither mysterious nor complex. When we follow them, we do not need to fear or be anxious.",
+    "tags": []
+  },
+  {
+    "id": 175,
+    "type": "quote",
+    "prompt": "Elder Neil L Andersen, Cherishing Life, Gen Conf, Apr 2025",
+    "answer": "Life is a most precious part of our Father’s perfect plan, and by His decree we cherish and preserve life.",
+    "tags": []
+  },
+  {
+    "id": 176,
+    "type": "quote",
+    "prompt": "Elder Ulisses Soares, Reverence for Sacred Things, Gen Conf, Apr 2025",
+    "answer": "Reverence for the sacred fosters genuine gratitude, expands true happiness, leads our minds to revelation, and brings greater joy to our lives.",
+    "tags": []
+  },
+  {
+    "id": 177,
+    "type": "quote",
+    "prompt": "Elder Dieter F Uchtdorf, By This All Will Know That You Are My Disciples, Gen Conf, Apr 2025",
+    "answer": "Our love for God and His children is a powerful testimony to the world that this is truly the Savior’s Church.",
+    "tags": []
+  },
+  {
+    "id": 178,
+    "type": "quote",
+    "prompt": "Elder Gary E Stevenson, And We Talk of Christ, Gen Conf, Apr 2025",
+    "answer": "We are followers of Jesus Christ, and we seek to both receive and share His light.",
+    "tags": []
+  },
+  {
+    "id": 179,
+    "type": "quote",
+    "prompt": "Elder Gerrit W Gong, Eternity’s Great Gifts: Jesus Christ’s Atonement, Resurrection, Restoration, Gen Conf, Apr 2025",
+    "answer": "We find in Easter in Jesus Christ peace, becoming, and belonging—that which is enduringly real and joyful, happy and forever.",
+    "tags": []
+  },
+  {
+    "id": 180,
+    "type": "quote",
+    "prompt": "Elder David A Bednar, In the Space of Not Many Years, Gen Conf, Oct 2024",
+    "answer": "If we are not faithful and obedient, we can transform the God-given blessing of prosperity into a prideful curse that diverts and distracts us.",
+    "tags": []
+  },
+  {
+    "id": 181,
+    "type": "quote",
+    "prompt": "Elder D Todd Christofferson, Worship, Gen Conf, Apr 2025",
+    "answer": "What does worshipping God mean for you and me?",
+    "tags": []
+  },
+  {
+    "id": 182,
+    "type": "quote",
+    "prompt": "Elder Quentin L Cook, Sacred Scriptures—the Foundations of Faith, Gen Conf, Oct 2024",
+    "answer": "We cannot underestimate the significance of sacred scriptures both in conversions and in remaining faithful in the gospel.",
+    "tags": []
+  },
+  {
+    "id": 183,
+    "type": "quote",
+    "prompt": "Elder D Todd Christofferson, The Sealing Power, Gen Conf, Oct 2023",
+    "answer": "The sealing power makes individual salvation and family exaltation universally available to the children of God.",
+    "tags": []
+  },
+  {
+    "id": 184,
+    "type": "quote",
+    "prompt": "Elder Dale G Renlund, Because of Jesus Christ, Gen Conf, Apr 2026",
+    "answer": "Focusing on the Savior, His infinite Atonement, and what He has done for us will bring joy and clarity into our lives.",
+    "tags": []
+  },
+  {
+    "id": 185,
+    "type": "quote",
+    "prompt": "Elder Dale G Renlund, Because of Jesus Christ, Gen Conf, Apr 2026",
+    "answer": "Because of Jesus Christ, all that is unfair in life can and will be made right.",
+    "tags": []
+  },
+  {
+    "id": 186,
+    "type": "quote",
+    "prompt": "Elder Ronald A Rasband, He Is Risen, Gen Conf, Apr 2026",
+    "answer": "With His Resurrection, Jesus Christ secured salvation from physical death for us, all of God’s children throughout the ages.",
+    "tags": []
+  },
+  {
+    "id": 187,
+    "type": "quote",
+    "prompt": "President Dieter F Uchtdorf, Encounter at the Empty Tomb, Gen Conf, Apr 2026",
+    "answer": "He lives and is an active, ongoing influence in His Church and in the personal lives of those who follow Him.",
+    "tags": []
+  },
+  {
+    "id": 188,
+    "type": "quote",
+    "prompt": "Elder Gérald Caussé, Love All; Love Each, Gen Conf, Apr 2026",
+    "answer": "Christlike love grows and multiplies as it is shared.",
+    "tags": []
+  },
+  {
+    "id": 189,
+    "type": "quote",
+    "prompt": "Elder Ulisses Soares, Jesus Christ—the True Vine, Gen Conf, Apr 2026",
+    "answer": "In a world of many voices, remaining connected to the True Vine is not merely desirable; it is essential to our spiritual survival.",
+    "tags": []
+  },
+  {
+    "id": 190,
+    "type": "quote",
+    "prompt": "Elder Quentin L Cook, Keys, Covenants, and Easter, Gen Conf, Apr 2026",
+    "answer": "His Atonement accomplished His Father’s plan of salvation and provides the way for everyone who has ever lived to be free of death unconditionally and free of sin on condition of repentance.",
+    "tags": []
+  },
+  {
+    "id": 191,
+    "type": "quote",
+    "prompt": "Elder Ronald A Rasband, He Is Risen, Gen Conf, Apr 2026",
+    "answer": "May we testify of Him by the way we live and what we love.",
+    "tags": []
+  },
+  {
+    "id": 192,
+    "type": "quote",
+    "prompt": "President Dieter F Uchtdorf, Encounter at the Empty Tomb, Gen Conf, Apr 2026",
+    "answer": "Even when things seem dark, we step forward in faith, with courage and humility, and walk toward the Savior’s light.",
+    "tags": []
+  },
+  {
+    "id": 193,
+    "type": "quote",
+    "prompt": "Elder Gérald Caussé, Love All; Love Each, Gen Conf, Apr 2026",
+    "answer": "We don’t serve only those we already love; rather, we come to love people as we serve them.",
+    "tags": []
+  },
+  {
+    "id": 194,
+    "type": "quote",
+    "prompt": "Elder Gerrit W Gong, Come to the Lord in His Holy House, Gen Conf, Oct 2026",
+    "answer": "In a world of commotion, contention, and cares, the Lord invites us to a place of spiritual safety, harmony, and holiness—the house of the Lord.",
+    "tags": []
+  },
+  {
+    "id": 195,
+    "type": "quote",
+    "prompt": "Elder Gerrit W Gong, Come to the Lord in His Holy House, Gen Conf, Oct 2026",
+    "answer": "There He teaches us His plan of happiness. He endows and blesses us. He prepares us to come home.",
+    "tags": []
+  },
+  {
+    "id": 196,
+    "type": "quote",
+    "prompt": "Elder Gérald Caussé, The Gift of Testimony, Gen Conf, Oct 2026",
+    "answer": "Your testimony can literally change lives—your own and the lives of others.",
+    "tags": []
+  },
+  {
+    "id": 197,
+    "type": "quote",
+    "prompt": "Elder Gérald Caussé, The Gift of Testimony, Gen Conf, Oct 2026",
+    "answer": "Our testimony is not a talent to be hidden. It is a gift to be shared—with grateful hearts and in a spirit of humility and love.",
+    "tags": []
+  },
+  {
+    "id": 198,
+    "type": "quote",
+    "prompt": "Elder Neil L Andersen, Courage Born of Our Faith in Jesus Christ, Gen Conf, Oct 2026",
+    "answer": "Faith and courage are hallmarks of disciples of Jesus Christ.",
+    "tags": []
+  },
+  {
+    "id": 199,
+    "type": "quote",
+    "prompt": "Elder Neil L Andersen, Courage Born of Our Faith in Jesus Christ, Gen Conf, Oct 2026",
+    "answer": "We need stillness to nourish our faith in Christ.",
+    "tags": []
+  },
+  {
+    "id": 200,
+    "type": "quote",
+    "prompt": "Elder Ulisses Soares, A Higher and Holier Fast, Gen Conf, Oct 2026",
+    "answer": "Fasting, when observed with joy and joined with prayer and generosity, brings sweeter communion with the Lord and a deeper, more personal connection with Him.",
+    "tags": []
+  },
+  {
+    "id": 201,
+    "type": "quote",
+    "prompt": "Elder Dale G Renlund, How Long Will It Be Ere They Believe Me?, Gen Conf, Oct 2026",
+    "answer": "We can experience joy in our here and now because of Jesus Christ and through our covenant relationship with Him.",
+    "tags": []
+  },
+  {
+    "id": 202,
+    "type": "quote",
+    "prompt": "Elder Ronald A Rasband, Love Like Jesus, Gen Conf, Oct 2026",
+    "answer": "By divine design, brothers and sisters, everyone must choose for themselves to follow Jesus Christ.",
+    "tags": []
+  },
+  {
+    "id": 203,
+    "type": "quote",
+    "prompt": "Elder Neil L Andersen, Courage Born of Our Faith in Jesus Christ, Gen Conf, Oct 2026",
+    "answer": "I promise you that as you strengthen your faith in Jesus Christ by believing and following Him and keeping His commandments, your answers will come, your spiritual power will increase, and your courage in following Christ will define your eternal soul.",
+    "tags": []
   }
 
 ]
