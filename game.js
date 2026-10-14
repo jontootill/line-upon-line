@@ -58,7 +58,7 @@ const SESSION_SIZE = 2;
 
 // How many different tests you must do on each quote before moving on.
 // (Up to 5, because there are five kinds of test.)
-const TESTS_PER_QUOTE = 3;
+const TESTS_PER_QUOTE = 2;
 
 // Opposites used by "Spot the wrong word" so some swaps look believable.
 const SWAPS = {
@@ -913,17 +913,17 @@ function keyToUTC(key) {
 }
 
 // Remember that a quote was passed today. "new" = learned for the first time.
+// Remember that a quote was passed today.
+// "new" = learned for the first time. "reviewed" = passed again after that.
+// A quote can be in both on the same day (learned, then reviewed).
 function logPass(quoteKey, wasNew) {
   const key = dayKey(new Date());
   const day = state.history[key] || { new: [], reviewed: [] };
   day.new = day.new.map(String);
   day.reviewed = day.reviewed.map(String);
 
-  if (wasNew) {
-    if (!day.new.includes(quoteKey)) day.new.push(quoteKey);
-  } else if (!day.new.includes(quoteKey) && !day.reviewed.includes(quoteKey)) {
-    day.reviewed.push(quoteKey);
-  }
+  const list = wasNew ? day.new : day.reviewed;
+  if (!list.includes(quoteKey)) list.push(quoteKey);
 
   state.history[key] = day;
   saveHistory();
@@ -935,7 +935,8 @@ function passedOn(key) {
   return new Set([...day.new, ...day.reviewed].map(String)).size;
 }
 
-// How many different quotes were learned (first time) or reviewed across some days
+// How many different quotes were learned, and how many were reviewed, across some days.
+// The two are counted separately, so one quote can appear in both.
 function totalsFor(keys) {
   const learned = new Set();
   const reviewed = new Set();
@@ -945,10 +946,7 @@ function totalsFor(keys) {
     day.new.forEach((id) => learned.add(String(id)));
     day.reviewed.forEach((id) => reviewed.add(String(id)));
   }
-  return {
-    learned: learned.size,
-    reviewed: [...reviewed].filter((id) => !learned.has(id)).length,
-  };
+  return { learned: learned.size, reviewed: reviewed.size };
 }
 
 // A streak is a run of days in a row with at least one passed test.
